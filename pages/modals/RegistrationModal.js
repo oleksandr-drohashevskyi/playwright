@@ -1,4 +1,3 @@
-// pages/modals/RegistrationModal.js
 import { expect } from "@playwright/test";
 
 export class RegistrationModal {

@@ -1,4 +1,3 @@
-// utils/user.factory.js
 export const makeUniqueUser = () => {
   const ts = Date.now();
   const rnd = Math.random().toString(16).slice(2);

@@ -1,4 +1,3 @@
-// tests/registration.spec.js
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/HomePage.js";
 import { RegistrationModal } from "../pages/modals/RegistrationModal.js";
@@ -47,7 +46,7 @@ test.describe("Registration - validation (POM)", () => {
 
     await reg.assertInvalid(reg.lastName, "B", "Last name has to be from 2 to 20 characters long");
     await reg.assertInvalid(reg.lastName, "B".repeat(21), "Last name has to be from 2 to 20 characters long");
-    await reg.assertInvalid(reg.lastName, "Петренko", "Last name is invalid"); // можно "Петренко", если у тебя так стабильно
+    await reg.assertInvalid(reg.lastName, "Петренko", "Last name is invalid");
 
     await reg.registerShouldBeDisabled();
   });
