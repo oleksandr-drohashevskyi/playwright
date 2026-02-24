@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "playwright sandbox",
   "main": "index.js",
-  "scripts": {},
+  "type": "module",
+  "scripts": {
+    "test:staging": "ENV=staging npx playwright test",
+    "test:prod": "ENV=prod npx playwright test",
+    "test:ui:staging": "ENV=staging npx playwright test --ui",
+    "test:ui:prod": "ENV=prod npx playwright test --ui"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oleksandr-drohashevskyi/playwright.git"
@@ -17,6 +23,7 @@
   "homepage": "https://github.com/oleksandr-drohashevskyi/playwright#readme",
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.3.0"
+    "@types/node": "^25.3.0",
+    "dotenv": "^17.3.1"
   }
 }
