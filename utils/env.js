@@ -1,31 +1,50 @@
-// utils/env.js
-import fs from "fs";
-import path from "path";
+
+import fs from "node:fs";
+import path from "node:path";
 import dotenv from "dotenv";
 
-export function loadEnv() {
-  const envName = process.env.ENV || "staging";
-  const envFile = `.env.${envName}`;
+const REQUIRED_KEYS = /** @type {const} */ (["BASE_URL", "HTTP_USER", "HTTP_PASS"]);
 
+/** @returns {boolean} */
+function hasAllRequiredEnv() {
+  return REQUIRED_KEYS.every((k) => Boolean(process.env[k]));
+}
+
+/**
+ * Load .env.<ENV> only if required vars are not already provided by the environment.
+ * - In CI we usually pass vars via GitHub Secrets → file is NOT needed.
+ * - Locally we load from .env.staging/.env.prod.
+ * @returns {void}
+ */
+export function loadEnv() {
+  // ✅ If secrets/vars already exist (CI), do nothing
+  if (hasAllRequiredEnv()) return;
+
+  /** @type {string} */
+  const envName = process.env.ENV ?? "staging";
+  const envFile = `.env.${envName}`;
   const fullPath = path.resolve(process.cwd(), envFile);
 
   if (!fs.existsSync(fullPath)) {
-    throw new Error(`Env file not found: ${envFile}`);
+    throw new Error(
+      `Env file not found: ${envFile}. Provide env vars (${REQUIRED_KEYS.join(
+        ", "
+      )}) or create ${envFile}`
+    );
   }
 
   dotenv.config({ path: fullPath });
-
-  return envName;
 }
 
+/**
+ * @returns {{ BASE_URL: string, HTTP_USER: string, HTTP_PASS: string }}
+ */
 export function getEnv() {
-  if (!process.env.BASE_URL) loadEnv();
+  loadEnv();
 
-  const required = ["BASE_URL", "HTTP_USER", "HTTP_PASS"];
-  for (const key of required) {
-    if (!process.env[key]) {
-      throw new Error(`Missing env var: ${key}`);
-    }
+  for (const key of REQUIRED_KEYS) {
+    const value = process.env[key];
+    if (!value) throw new Error(`Missing env var: ${key}`);
   }
 
   return {

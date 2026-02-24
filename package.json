@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "playwright sandbox",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test:staging": "ENV=staging npx playwright test",
     "test:prod": "ENV=prod npx playwright test",
