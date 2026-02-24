@@ -17,6 +17,7 @@ const env = getEnv();
  */
 export default defineConfig({
   testDir: "./tests",
+  testMatch: "**/*.spec.js",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -45,18 +46,25 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: "setup",
+      testMatch: "**/setup.js",
+    },
+    {
       name: "chromium",
       use: { ...devices["Desktop Chrome"] },
+      dependencies: ["setup"],
     },
 
     {
       name: "firefox",
       use: { ...devices["Desktop Firefox"] },
+      dependencies: ["setup"],
     },
 
     {
       name: "webkit",
       use: { ...devices["Desktop Safari"] },
+      dependencies: ["setup"],
     },
 
     /* Test against mobile viewports. */
