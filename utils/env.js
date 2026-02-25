@@ -1,9 +1,12 @@
-
 import fs from "node:fs";
 import path from "node:path";
 import dotenv from "dotenv";
 
-const REQUIRED_KEYS = /** @type {const} */ (["BASE_URL", "HTTP_USER", "HTTP_PASS"]);
+const REQUIRED_KEYS = /** @type {const} */ ([
+  "BASE_URL",
+  "HTTP_USER",
+  "HTTP_PASS",
+]);
 
 /** @returns {boolean} */
 function hasAllRequiredEnv() {
@@ -28,8 +31,8 @@ export function loadEnv() {
   if (!fs.existsSync(fullPath)) {
     throw new Error(
       `Env file not found: ${envFile}. Provide env vars (${REQUIRED_KEYS.join(
-        ", "
-      )}) or create ${envFile}`
+        ", ",
+      )}) or create ${envFile}`,
     );
   }
 
@@ -51,5 +54,7 @@ export function getEnv() {
     BASE_URL: process.env.BASE_URL,
     HTTP_USER: process.env.HTTP_USER,
     HTTP_PASS: process.env.HTTP_PASS,
+    USER_EMAIL: process.env.USER_EMAIL,
+    USER_PASSWORD: process.env.USER_PASSWORD,
   };
 }

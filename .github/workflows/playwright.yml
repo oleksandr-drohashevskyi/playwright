@@ -16,6 +16,8 @@ jobs:
       BASE_URL: ${{ secrets.BASE_URL }}
       HTTP_USER: ${{ secrets.HTTP_USER }}
       HTTP_PASS: ${{ secrets.HTTP_PASS }}
+      USER_EMAIL: ${{ secrets.USER_EMAIL }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
       # Опционально: если ENV=staging/prod в utils/env.js
       # ENV: staging
 
